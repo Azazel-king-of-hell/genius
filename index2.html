@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>TopCodes Example</title>
+</head>
+
+<body>
+    <canvas id="video-canvas" width="800" height="600" style="background: #ddd;"></canvas>
+    <br />
+    <button id="camera-button" onclick="TopCodes.startStopVideoScan('video-canvas')">Start/stop</button>
+    <script src="topcodes.js"></script>
+
+    <script>
+        var time = 0
+        var audio
+        TopCodes.setVideoFrameCallback("video-canvas", function (jsonString) {
+            var json = JSON.parse(jsonString);
+            var topcodes = json.topcodes;
+            var tempoagora = Date.now()
+
+
+            if (topcodes.length > 0 && Date.now() - time > 0 && topcodes[0].code == 157) {
+                time = Date.now() + 737000
+                audio = new Audio("./Battle_theme.mp3");
+                audio.play();
+            }
+
+            if (topcodes.length > 0 && Date.now() - time > 0 && topcodes[0].code == 205) {
+                time = Date.now() + 122000
+                audio = new Audio("cemiterio.mp3");
+                audio.play();
+            }
+
+            if (topcodes.length > 0 && Date.now() - time > 0 && topcodes[0].code == 279) {
+                time = Date.now() + 188000
+                audio = new Audio("floresta.mp3");
+                audio.play();
+            }
+            if (topcodes.length > 0 && topcodes[0].code == 327) {
+                time = 0
+                audio.pause();
+            }
+            console.log(topcodes[0].code)
+        });
+    </script>
+</body>
+
+</html>
